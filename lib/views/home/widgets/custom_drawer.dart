@@ -20,14 +20,14 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.lightbulb_outline),
             title: const Text('Notes'),
             onTap: () {
-              Navigator.pop(context); // إغلاق الـ Drawer
+              Navigator.pop(context);
             },
           ),
           ListTile(
             leading: const Icon(Icons.add),
             title: const Text('Create new label'),
             onTap: () {
-              Navigator.pop(context); // إغلاق الـ Drawer قبل فتح الـ Dialog
+              Navigator.pop(context); 
               _showCreateLabelDialog(context);
             },
           ),
@@ -72,7 +72,7 @@ class CustomDrawer extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 if (labelController.text.trim().isNotEmpty) {
-                  // تنفيذ إضافة الـ Label هنا مستقبلاً
+                 
                 }
                 Navigator.pop(dialogContext);
               },

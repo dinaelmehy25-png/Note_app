@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // عرض قائمة / شبكة الملاحظات باستخدام BlocBuilder
+           
             Expanded(
               child: BlocBuilder<NotesCubit, NotesState>(
                 builder: (context, state) {

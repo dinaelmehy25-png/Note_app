@@ -8,7 +8,7 @@ class NotesCubit extends Cubit<NotesState> {
 
   String searchQuery = '';
 
-  // قراءة الملاحظات وتصفيتها
+ 
   void fetchNotes() {
     emit(NotesLoading());
     try {
@@ -32,26 +32,26 @@ class NotesCubit extends Cubit<NotesState> {
     }
   }
 
-  // البحث
+
   void updateSearchQuery(String query) {
     searchQuery = query;
     fetchNotes();
   }
 
-  // إضافة ملاحظة
+
   void addNote(NoteModel note) async {
     final box = Hive.box<NoteModel>('notes_box');
     await box.put(note.id, note);
     fetchNotes();
   }
 
-  // تعديل ملاحظة
+  
   void updateNote(NoteModel updatedNote) async {
     await updatedNote.save();
     fetchNotes();
   }
 
-  // نقل للـ Trash
+
   void deleteNote(String id) async {
     final box = Hive.box<NoteModel>('notes_box');
     final note = box.values.firstWhere((n) => n.id == id);
@@ -60,7 +60,7 @@ class NotesCubit extends Cubit<NotesState> {
     fetchNotes();
   }
 
-  // تثبيت الملاحظة
+
   void togglePin(String id) async {
     final box = Hive.box<NoteModel>('notes_box');
     final note = box.values.firstWhere((n) => n.id == id);
@@ -69,7 +69,7 @@ class NotesCubit extends Cubit<NotesState> {
     fetchNotes();
   }
 
-  // تحديث التشيك بوكس
+
   void toggleCheckItem(String noteId, String itemId) async {
     final box = Hive.box<NoteModel>('notes_box');
     final note = box.values.firstWhere((n) => n.id == noteId);

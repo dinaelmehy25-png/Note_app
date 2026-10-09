@@ -67,7 +67,7 @@ class NoteCard extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            // التفاعل المباشر مع عنصر القائمة عبر الـ Cubit
+                           
                             context
                                 .read<NotesCubit>()
                                 .toggleCheckItem(note.id, item.id);
