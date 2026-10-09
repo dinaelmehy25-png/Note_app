@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../cubits/notes_cubit.dart';
 import '../../../models/note_model.dart';
 
 class NoteCard extends StatelessWidget {
@@ -6,15 +9,15 @@ class NoteCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const NoteCard({
-    Key? key,
+    super.key,
     required this.note,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.black87 : Colors.black87;
+    const textColor = Colors.black87;
 
     return GestureDetector(
       onTap: onTap,
@@ -22,7 +25,7 @@ class NoteCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Color(note.colorHex),
-          borderRadius: BorderRadius.circular(16), 
+          borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isDark ? Colors.transparent : Colors.black.withOpacity(0.05),
           ),
@@ -34,7 +37,7 @@ class NoteCard extends StatelessWidget {
             if (note.title.isNotEmpty) ...[
               Text(
                 note.title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 17,
                   color: textColor,
@@ -62,12 +65,20 @@ class NoteCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 2),
                     child: Row(
                       children: [
-                        Icon(
-                          item.isDone
-                              ? Icons.check_box
-                              : Icons.check_box_outline_blank,
-                          size: 18,
-                          color: textColor.withOpacity(0.7),
+                        GestureDetector(
+                          onTap: () {
+                            // التفاعل المباشر مع عنصر القائمة عبر الـ Cubit
+                            context
+                                .read<NotesCubit>()
+                                .toggleCheckItem(note.id, item.id);
+                          },
+                          child: Icon(
+                            item.isDone
+                                ? Icons.check_box
+                                : Icons.check_box_outline_blank,
+                            size: 18,
+                            color: textColor.withOpacity(0.7),
+                          ),
                         ),
                         const SizedBox(width: 8),
                         Expanded(

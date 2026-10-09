@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({Key? key}) : super(key: key);
+  const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +20,14 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.lightbulb_outline),
             title: const Text('Notes'),
             onTap: () {
-              Get.back(); 
+              Navigator.pop(context); // إغلاق الـ Drawer
             },
           ),
           ListTile(
             leading: const Icon(Icons.add),
             title: const Text('Create new label'),
             onTap: () {
-              Get.back();
+              Navigator.pop(context); // إغلاق الـ Drawer قبل فتح الـ Dialog
               _showCreateLabelDialog(context);
             },
           ),
@@ -36,14 +35,14 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.archive_outlined),
             title: const Text('Archive'),
             onTap: () {
-              Get.back();
+              Navigator.pop(context);
             },
           ),
           ListTile(
             leading: const Icon(Icons.delete_outline),
             title: const Text('Trash'),
             onTap: () {
-              Get.back(); 
+              Navigator.pop(context);
             },
           ),
         ],
@@ -51,26 +50,36 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
- 
   void _showCreateLabelDialog(BuildContext context) {
     final TextEditingController labelController = TextEditingController();
-    Get.defaultDialog(
-      title: 'Create new label',
-      content: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: TextField(
-          controller: labelController,
-          decoration: const InputDecoration(hintText: 'Enter label name'),
-        ),
-      ),
-      textConfirm: 'Save',
-      textCancel: 'Cancel',
-      confirmTextColor: Colors.white,
-      onConfirm: () {
-        if (labelController.text.trim().isNotEmpty) {
-         
-        }
-        Get.back();
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Create new label'),
+          content: TextField(
+            controller: labelController,
+            decoration: const InputDecoration(hintText: 'Enter label name'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(dialogContext);
+              },
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (labelController.text.trim().isNotEmpty) {
+                  // تنفيذ إضافة الـ Label هنا مستقبلاً
+                }
+                Navigator.pop(dialogContext);
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        );
       },
     );
   }
